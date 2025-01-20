@@ -1,0 +1,238 @@
+/* 基本設置 */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f8f9fa;
+    color: #333;
+}
+
+/* 頁首導航條 */
+.navbar {
+    background-color: #5a7391;
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.navbar .logo {
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+.navbar a {
+    color: white;
+    text-decoration: none;
+    margin: 0 15px;
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+.navbar a:hover {
+    text-decoration: underline;
+}
+
+/* 內容容器 */
+.container {
+    margin: 30px auto;
+    max-width: 900px;
+    background: white;
+    padding: 25px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+/* 標題 */
+h1 {
+    text-align: center;
+    color: #5a7391;
+    margin-bottom: 20px;
+    font-size: 2em;
+}
+
+/* 表單和輸入欄 */
+form input[type="text"], form input[type="password"] {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1em;
+}
+
+form button {
+    background-color: #5a7391;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1.1em;
+    transition: background-color 0.3s ease;
+}
+
+form button:hover {
+    background-color: #3e536b;
+}
+
+/* 其他連結 */
+p a {
+    color: #5a7391;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+p a:hover {
+    text-decoration: underline;
+}
+
+/* 表格樣式 */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background-color: #5a7391;
+    color: white;
+    font-weight: bold;
+}
+
+td {
+    background-color: #f9f9f9;
+}
+
+tr:nth-child(even) td {
+    background-color: #f1f1f1;
+}
+
+td p {
+    margin: 5px 0;
+}
+
+td a {
+    color: #5a7391;
+    text-decoration: none;
+}
+
+td a:hover {
+    text-decoration: underline;
+}
+
+/* 響應式設計 */
+@media screen and (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .container {
+        margin: 20px;
+        padding: 15px;
+    }
+
+    .navbar a {
+        margin: 5px 0;
+        font-size: 1em;
+    }
+}
+
+/* 排行榜區域 */
+.rankings-container {
+    margin-top: 40px;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.rankings-container h2 {
+    text-align: center;
+    color: #5a7391;
+    font-size: 1.8em;
+    margin-bottom: 20px;
+}
+
+/* 排行榜表格 */
+.rankings-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.rankings-table th, .rankings-table td {
+    padding: 15px;
+    text-align: center;
+    font-size: 1.1em;
+    border-bottom: 2px solid #ddd;
+}
+
+.rankings-table th {
+    background-color: #5a7391;
+    color: white;
+    font-weight: bold;
+    border-radius: 5px;
+}
+
+/* 基本的單元格樣式 */
+.rankings-table td {
+    background-color: #f9f9f9 !important; /* 保持默认背景色，并强制覆盖 */
+    color: black;  /* 改成黑色 */
+    border-radius: 5px;
+}
+
+.rankings-table tr:nth-child(even) td {
+    background-color: #f1f1f1;
+}
+
+.rankings-table tr:hover td {
+    background-color: #e2e2e2;
+}
+
+/* 領先位置樣式 */
+.rankings-table tr.first-place td {
+    background-color: #eacd76 !important; /* 金色背景 */
+    font-weight: bold;
+    color: black;  /* 改成黑色 */
+}
+
+.rankings-table tr.second-place td {
+    background-color: #d3d3d4 !important; /* 銀色背景 */
+    font-weight: bold;
+    color: black;  /* 改成黑色 */
+}
+
+.rankings-table tr.third-place td {
+    background-color: #c6a57b !important; /* 銅色背景 */
+    font-weight: bold;
+    color: black;  /* 改成黑色 */
+}
+
+.rankings-table tr.other-places td {
+    background-color: #f9f9f9; /* 默認顏色 */
+    font-weight: bold;
+    color: black;  /* 改成黑色 */
+}
+
+/* 排行榜數據 */
+.rankings-table td a {
+    color: #5a7391;
+    text-decoration: none;
+    font-weight: normal;
+}
+
+.rankings-table td a:hover {
+    text-decoration: underline;
+}
+
+

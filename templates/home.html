@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>題目列表</h1>
+{% for question in questions %}
+    <div>
+        <h2>{{ question.description }}</h2>
+        <a href="/question/{{ question.id }}">回答</a>
+    </div>
+{% endfor %}
+{% endblock %}

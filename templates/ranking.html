@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>排行榜</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="navbar">
+        <div class="logo">Math Judge</div>
+        <div>
+            <a href="/">題目列表</a>
+            <a href="/ranking">排行榜</a>
+            {% if session.get('username') %}
+                <a href="/logout">登出</a>
+            {% else %}
+                <a href="/login">登入</a>
+                <a href="/register">註冊</a>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="rankings-container">
+        <h2>排行榜</h2>
+        <table class="rankings-table">
+            <thead>
+                <tr>
+                    <th>排名</th>
+                    <th>使用者</th>
+                    <th>分數</th>
+                    <th>回答時間</th>
+                    <th>題目結果</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                <tr class="{% if loop.index == 1 %}first-place{% elif loop.index == 2 %}second-place{% elif loop.index == 3 %}third-place{% else %}other-places{% endif %}">
+                    <td>{{ loop.index }}</td>
+                    <td>{{ user.username }}</td>
+                    <td>{{ user.score }}</td>
+                    <td>
+                        {% for question in questions %}
+                        <p>{{ question.description }}:
+                            {% if question.description in user.answered_info %}
+                            時間: {{ user.answered_info[question.description].time }}，結果: {{ user.answered_info[question.description].result }}
+                            {% else %}
+                            尚未回答
+                            {% endif %}
+                        </p>
+                        {% endfor %}
+                    </td>
+                    <td>
+                        {% for question in questions %}
+                        <p>
+                            {% if question.description in user.answered_info %}
+                            {% if user.answered_info[question.description].result == '正確' %}
+                            ✔
+                            {% else %}
+                            ✘
+                            {% endif %}
+                            {% else %}
+                            尚未回答
+                            {% endif %}
+                        </p>
+                        {% endfor %}
+                    </td>
+                </tr>                
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
