@@ -4,7 +4,7 @@ from datetime import datetime
 
 app = Flask(__name__)
 app.secret_key = "your_secret_key"
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'  # 使用 SQLite 資料庫
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://math_judge_data_user:h3t4lfaVdSPwIMFk0IKMUuu2MNbPp9p4@dpg-cu734hjtq21c738c9560-a:5432/math_judge_data'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
@@ -28,28 +28,30 @@ def init_app():
         # 創建資料庫表格
         db.create_all()
 
-        # 刪除所有現有的題目資料
-        Question.query.delete()
+        # 檢查題目資料是否已存在
+        if Question.query.count() == 0:  # 只有在題目表格為空時才插入題目
+            # 插入新題目
+            questions = [
+                Question(description="例題一", answer="35"),
+                Question(description="例題二", answer="519"),
+                Question(description="例題三", answer="7"),
+                Question(description="例題四", answer="10608103"),
+                Question(description="例題五", answer="10254"),
+                Question(description="例題六", answer="45"),
+                Question(description="例題七", answer="987"),
+                Question(description="例題八", answer="175"),
+                Question(description="例題九", answer="13"),
+                Question(description="例題十", answer="625"),
+                Question(description="例題十一", answer="4"),
+                Question(description="例題十二", answer="0"),
+                Question(description="例題十四", answer="6174"),
+            ]
+            db.session.add_all(questions)
+            db.session.commit()
+            print("題目資料已重新插入！")
+        else:
+            print("題目資料已經存在，不需要重新插入。")
 
-        # 插入新題目
-        questions = [
-            Question(description="例題一", answer="35"),
-            Question(description="例題二", answer="519"),
-            Question(description="例題三", answer="7"),
-            Question(description="例題四", answer="10608103"),
-            Question(description="例題五", answer="10254"),
-            Question(description="例題六", answer="45"),
-            Question(description="例題七", answer="987"),
-            Question(description="例題八", answer="175"),
-            Question(description="例題九", answer="13"),
-            Question(description="例題十", answer="625"),
-            Question(description="例題十一", answer="4"),
-            Question(description="例題十二", answer="0"),
-            Question(description="例題十四", answer="6174"),
-        ]
-        db.session.add_all(questions)
-        db.session.commit()
-        print("題目資料已重新插入！")
 
 # 啟動應用時執行初始化
 init_app()
