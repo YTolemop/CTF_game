@@ -6,15 +6,10 @@ import os
 app = Flask(__name__)
 app.secret_key = "your_secret_key"
 
-# 取得並修正 DATABASE_URL（避免 psycopg2 連線錯誤）
-uri = os.getenv('DATABASE_URL')
-if uri and uri.startswith("postgres://"):
-    uri = uri.replace("postgres://", "postgresql://", 1)
-app.config['SQLALCHEMY_DATABASE_URI'] = uri
+# 使用環境變數 DATABASE_URL 設定 SQLAlchemy 的資料庫 URI
+app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
-
-print("使用的資料庫 URI：", app.config['SQLALCHEMY_DATABASE_URI'])  # Debug用
 
 # 定義使用者資料庫模型
 class User(db.Model):
@@ -60,6 +55,7 @@ def init_app():
             print("題目資料已重新插入！")
         else:
             print("題目資料已經存在，不需要重新插入。")
+
 
 # 啟動應用時執行初始化
 init_app()
