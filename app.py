@@ -6,10 +6,15 @@ import os
 app = Flask(__name__)
 app.secret_key = "your_secret_key"
 
-# 使用環境變數 DATABASE_URL 設定 SQLAlchemy 的資料庫 URI
-app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
+# 取得並修正 DATABASE_URL（避免 psycopg2 連線錯誤）
+uri = os.getenv('DATABASE_URL')
+if uri and uri.startswith("postgres://"):
+    uri = uri.replace("postgres://", "postgresql://", 1)
+app.config['SQLALCHEMY_DATABASE_URI'] = uri
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
+
+print("使用的資料庫 URI：", app.config['SQLALCHEMY_DATABASE_URI'])  # Debug用
 
 # 定義使用者資料庫模型
 class User(db.Model):
@@ -35,26 +40,26 @@ def init_app():
         if Question.query.count() == 0:  # 只有在題目表格為空時才插入題目
             # 插入新題目
             questions = [
-                Question(description="例題一", answer="35"),
-                Question(description="例題二", answer="519"),
-                Question(description="例題三", answer="7"),
-                Question(description="例題四", answer="10608103"),
-                Question(description="例題五", answer="10254"),
-                Question(description="例題六", answer="45"),
-                Question(description="例題七", answer="987"),
-                Question(description="例題八", answer="175"),
-                Question(description="例題九", answer="13"),
-                Question(description="例題十", answer="625"),
-                Question(description="例題十一", answer="4"),
-                Question(description="例題十二", answer="0"),
-                Question(description="例題十四", answer="6174"),
+                Question(description="CMD-1", answer="Pomeloflag{01_HAHAHA_you_find_it}"),
+                Question(description="CMD-2", answer="Pomeloflag{02_Base64_is_too_easy_to_you}"),
+                Question(description="CMD-3", answer="Pomeloflag{03_LOL_is_a_good_game}"),
+                Question(description="CMD-4", answer="Pomeloflag{04_Caesar_cipher_is_so_cool}"),
+                Question(description="CMD-5", answer="Pomeloflag{05_VIP666}"),
+                Question(description="CMD-6", answer="Pomeloflag{06_Heartbreak}"),
+                Question(description="CMD-7", answer="Pomeloflag{07_ASCII_fun}"),
+                Question(description="CMD-8", answer="Pomeloflag{08_Base_32_Skill_get}"),
+                Question(description="CMD-9", answer="Pomeloflag{09_STORY_IS_ONGOING_AND_NEVER_DIED}"),
+                Question(description="CMD-10", answer="Pomeloflag{10_OHTHEPASSWORDISTHISSTRING}"),
+                Question(description="Web-1", answer="Pomeloflag{YoU_FOund_tHe_FLag_1}"),
+                Question(description="Web-2", answer="Pomeloflag{You_FoUnd_THe_flAg_2}"),
+                Question(description="Web-3", answer="Pomeloflag{yOu_foUNd_thE_flaG_3}"),
+                Question(description="Web-4", answer="Pomeloflag{yOU_FOunD_THe_fLaG_4}"),
             ]
             db.session.add_all(questions)
             db.session.commit()
             print("題目資料已重新插入！")
         else:
             print("題目資料已經存在，不需要重新插入。")
-
 
 # 啟動應用時執行初始化
 init_app()
