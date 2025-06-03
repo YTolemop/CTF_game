@@ -1,10 +1,13 @@
 from flask import Flask, request, session, redirect, url_for, render_template
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
+import os
 
 app = Flask(__name__)
 app.secret_key = "your_secret_key"
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://math_judge_data_user:h3t4lfaVdSPwIMFk0IKMUuu2MNbPp9p4@dpg-cu734hjtq21c738c9560-a:5432/math_judge_data'
+
+# 使用環境變數 DATABASE_URL 設定 SQLAlchemy 的資料庫 URI
+app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
@@ -151,9 +154,6 @@ def submit(question_id):
     else:
         return f"答錯了，請再試一次！<br><a href='/question/{question_id}'>重新回答</a>"
 
-
-
-
 # 登出
 @app.route('/logout')
 def logout():
@@ -188,8 +188,6 @@ def ranking():
         })
 
     return render_template('ranking.html', users=users_with_history, questions=Question.query.all())
-
-
 
 # 刪除使用者
 @app.route('/delete_user/<username>', methods=['POST'])
